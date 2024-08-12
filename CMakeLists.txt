@@ -5,11 +5,45 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(ament_cmake_python REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclpy REQUIRED)
+
+# ********************* Cpp Stuff ****************
+
+include_directories(include)
+include_directories(description)
+include_directories(arm_control)
+
+# Create cpp executables
+# add_executable(cpp_exe src/cpp_node.cpp)
+# ament_target_dependencies(cpp_exe rclcpp)
+
+
+# Install cpp executables
+# install(TARGETS
+#   cpp_exe
+#   DESTINATION lib/${PROJECT_NAME}
+# )
+
+# **************** Python Stuff *****************
+
+ament_python_install_package(${PROJECT_NAME})
+
+# Install Python executables
+
+#install(PROGRAMS
+#  DESTINATION lib/${PROJECT_NAME}
+#)
+
+install(DIRECTORY description/mesh
+  DESTINATION share/${PROJECT_NAME}/description
+  FILES_MATCHING PATTERN "*.STL"
+)
+
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

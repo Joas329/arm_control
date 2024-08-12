@@ -1,0 +1,288 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_arm" >	
+
+	<xacro:arg name="namespace" default="robot1"/>
+	<xacro:include filename="macros.xacro"/>
+
+	<material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <material name="orange">
+        <color rgba="1 0.3 0.1 1"/>
+    </material>
+
+    <material name="blue">
+        <color rgba="0.2 0.2 1 1"/>
+    </material>
+
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+	<!--Dummy Link-->
+	<link name="$(arg namespace)_base_link"/>
+    <joint name="$(arg namespace)_dummy_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="$(arg namespace)_base_link"/>
+        <child link="$(arg namespace)_arm_a1"/>
+    </joint>
+
+	<!--Arm Links-->
+
+	<!--Arm 1-->
+
+	<xacro:arm_component 
+		namespace="$(arg namespace)"
+		component_number ="1"
+		type = "revolute"
+		parent_link="$(arg namespace)_arm_a1"
+		child_link="$(arg namespace)_arm_a2"
+		mass = "3.8185"
+		axis = "0 0 1"
+		Lxx="100.85864"
+		Lxy="2.33423"
+		Lxz="-0.07753"
+		Lyy="40.30078"
+		Lyz="-0.00376"
+		Lzz="69.49319"
+		file="ARM-A01"
+		inertiaX = "-3.34872"
+		inertiaY = "-7.71683"
+		inertiaZ = "0.00031"
+		effort_limit = "400000.0"
+		lower_limit = "${radians(-180)}"
+		upper_limit = "${radians(180)}"
+		velocity_limit = "300000.0"
+		joint_X = "-3.50000000"
+		joint_Y = "0.51712500"
+		joint_Z = "0.0"
+	/>
+
+
+	<!--Arm 2-->
+
+	<xacro:arm_component 
+		namespace="$(arg namespace)"
+		component_number ="2"
+		type = "revolute"
+		parent_link="$(arg namespace)_arm_a2"
+		child_link="$(arg namespace)_arm_a3"
+		mass="3.6524"
+		axis = "0 -1 0"
+		Lxx="21.53"
+		Lxy="0.0"
+		Lxz="0.0"
+		Lyy="10.896"
+		Lyz="0.14287"
+		Lzz="14.594"
+		file="ARM-A02"
+		inertiaX = "0"
+		inertiaY = "2.7203"
+		inertiaZ = "0.03799"
+		effort_limit = "125000.0"
+		lower_limit = "${radians(-15)}"
+		upper_limit = "${radians(135)}"
+		velocity_limit = "300000.0"
+		joint_X = "0.0"
+		joint_Y = "3.75000000"
+		joint_Z = "0.0"
+	/>
+
+	<!--Arm 3-->
+
+	<xacro:arm_component 
+		namespace="$(arg namespace)"
+		component_number ="3"
+		type = "revolute"
+		parent_link="$(arg namespace)_arm_a3"
+		child_link="$(arg namespace)_arm_a4"
+		mass="6.5626"
+		axis = "0 1 0"
+		Lxx="65.558"
+		Lxy="-0.15469"
+		Lxz="0.02472"
+		Lyy="525.31"
+		Lyz="-0.00494"
+		Lzz="465.43"
+		file="ARM-A03"
+		inertiaX="9.0018"
+		inertiaY="-0.00037"
+		inertiaZ="4.4146"
+		effort_limit = "800000.0"
+		lower_limit = "${radians(-120)}"
+		upper_limit = "${radians(120)}"
+		velocity_limit = "300000.0"
+		joint_X = "18.00000000"
+		joint_Y = "0.0"
+		joint_Z = "0.0"
+	/>
+
+	<!--Arm 4-->
+
+	<xacro:arm_component
+		namespace="$(arg namespace)"
+		component_number ="4"
+		type = "continuous"
+		parent_link="$(arg namespace)_arm_a4"
+		child_link="$(arg namespace)_arm_a5"
+		mass="5.2840"
+		axis = "1 0 0"
+		Lxx="17.7636"
+		Lxy="-0.0006"
+		Lxz="-1.1308"
+		Lyy="240.1392"
+		Lyz="-0.0001"
+		Lzz="227.3199"
+		file="ARM-A04"
+		inertiaX="4.9938"
+		inertiaY="0.0000"
+		inertiaZ="0.0189"
+		effort_limit = "300000.0"
+		lower_limit = "${radians(-180)}"
+		upper_limit = "${radians(180)}"
+		velocity_limit = "300000.0"
+		joint_X = "4.48622047"
+		joint_Y = "0.0"
+		joint_Z = "0.0"
+	/>
+
+
+	<!--Arm 5-->
+
+	<xacro:arm_component
+		namespace="$(arg namespace)"
+		component_number ="5"
+		type = "revolute"
+		parent_link="$(arg namespace)_arm_a5"
+		child_link="$(arg namespace)_arm_a6"
+		mass="2.8972"
+		axis = "0 1 0"
+		Lxx="19.6638"
+		Lxy="-0.0018"
+		Lxz="1.7653"
+		Lyy="43.6205"
+		Lyz="-0.0010"
+		Lzz="30.6708"
+		file="ARM-A05"
+		inertiaX="14.8203"
+		inertiaY="0.0000"
+		inertiaZ="0.2634"
+		effort_limit = "300000.0"
+		lower_limit = "${radians(-90)}"
+		upper_limit = "${radians(90)}"
+		velocity_limit = "300000.0"
+		joint_X = "17.25000000"
+		joint_Y = "0.0"
+		joint_Z = "0.0"
+	/>
+
+	<!--Arm 6-->
+
+	<xacro:arm_component
+		namespace="$(arg namespace)"
+		component_number ="6"
+		type = "revolute"
+		parent_link="$(arg namespace)_arm_a6"
+		child_link="$(arg namespace)_arm_a7"
+		mass="2.2545"
+		axis = "1 0 0"
+		Lxx="8.2279"
+		Lxy="-0.0415"
+		Lxz="-0.0881"
+		Lyy="9.0021"
+		Lyz="0.0008"
+		Lzz="6.2503"
+		file="ARM-A06"
+		inertiaX="1.6113"
+		inertiaY="-0.0138"
+		inertiaZ="0.0240"
+		effort_limit = "300000.0"
+		lower_limit = "${radians(-90)}"
+		upper_limit = "${radians(90)}"
+		velocity_limit = "300000.0"
+		joint_X = "2.98622047"
+		joint_Y = "0.0"
+		joint_Z = "0.0"
+	/>
+
+	<!--Arm 7-->	
+
+	<link name="$(arg namespace)_arm_a7">
+		<inertial>
+		<mass value="0.454"/>
+		<origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+		<inertia ixx="7.0307" ixy="0.0" ixz="-0.0" iyy="7.0307" iyz="-0.0" izz="7.0307"/>
+		</inertial>
+		<collision>
+			<origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+			<geometry>
+				<box size="0.01 0.01 0.01"/>
+			</geometry>
+		</collision>
+  	</link>
+
+	<!-- <joint name="arm_j7" type="prismatic">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <parent link="arm_a7"/>
+            <child link="arm_a8"/>
+            <axis xyz="1 0 0"/>
+			 <limit effort="50" lower="-50" upper="50" velocity="50"/>
+	</joint> -->
+
+	<!-- <link name="arm_a8">
+		<inertial>
+			<mass value="0.454"/>
+			<origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+			<inertia ixx="7.0307" ixy="0.0" ixz="-0.0" iyy="7.0307" iyz="-0.0" izz="7.0307"/>
+		</inertial>
+		<collision>
+		<origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+		<geometry>
+			<box size="0.01 0.01 0.01"/>
+		</geometry>
+		</collision>
+  	</link>
+ -->
+
+
+
+	<!--Defining ROS2 Control Joints-->
+
+	<ros2_control name="yurs_motor" type="actuator">
+		<hardware>
+			<plugin>yurs_hardware/yurs_motor</plugin>
+			<param name="can_interface">can0</param>
+		</hardware>
+
+ 		<joint name="arm_j1">
+			<param name="device_id">6</param>
+			<param name="counts_per_rev">1050</param>
+		</joint>
+		<joint name="arm_j2">
+			<param name="device_id">7</param>
+			<param name="counts_per_rev">5250</param>
+		</joint>
+		<joint name="arm_j3">
+			<param name="device_id">8</param>
+			<param name="counts_per_rev">5250</param>
+		</joint>
+		<joint name="arm_j4">
+			<param name="device_id">9</param>
+			<param name="counts_per_rev">1149.1597</param>
+		</joint>
+		<joint name="arm_j5">
+			<param name="device_id">10</param>
+			<param name="counts_per_rev">1149.1597</param>
+		</joint>
+		<joint name="arm_j6">
+			<param name="device_id">11</param>
+			<param name="counts_per_rev">1149.1597</param>
+		</joint>
+		<!-- <joint name="arm_j7">
+			<param name="device_id">12</param>
+			<param name="counts_per_rev">1512</param>
+		</joint> -->
+	</ros2_control>
+
+</robot>

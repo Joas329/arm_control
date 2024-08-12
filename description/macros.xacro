@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  >
+
+    <!--Joint Creator-->
+
+    <xacro:macro name="joint_creator" params="namespace name">
+        <joint name="${namespace}_${name}">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+
+            <state_interface name="velocity"/>
+            <state_interface name="position"/>
+
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="arm_joint_creator" params="namespace name">
+            <joint name="${namespace}_${name}">
+                <command_interface name="effort"/>
+                
+                <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                </state_interface>
+                <!-- <state_interface name="velocity"/> -->
+            </joint>
+    </xacro:macro>
+
+    <!--Inertial Macros-->
+
+    <xacro:macro name="inertial_sphere" params="mass radius *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(2/5) * mass * (radius*radius)}" ixy="0.0" ixz="0.0"
+                    iyy="${(2/5) * mass * (radius*radius)}" iyz="0.0"
+                    izz="${(2/5) * mass * (radius*radius)}" />
+        </inertial>
+    </xacro:macro>  
+
+
+    <xacro:macro name="inertial_box" params="mass x y z *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(1/12) * mass * (y*y+z*z)}" ixy="0.0" ixz="0.0"
+                    iyy="${(1/12) * mass * (x*x+z*z)}" iyz="0.0"
+                    izz="${(1/12) * mass * (x*x+y*y)}" />
+        </inertial>
+    </xacro:macro>
+
+
+    <xacro:macro name="inertial_cylinder" params="mass length radius *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(1/12) * mass * (3*radius*radius + length*length)}" ixy="0.0" ixz="0.0"
+                    iyy="${(1/12) * mass * (3*radius*radius + length*length)}" iyz="0.0"
+                    izz="${(1/2) * mass * (radius*radius)}" />
+        </inertial>
+    </xacro:macro>
+
+    <!--Arm Inertial Macros-->
+
+    <xacro:property name="intom" value="0.0254"/>
+	<xacro:property name="lbtokg" value="0.454"/>
+	<xacro:property name="lbsqintokgsqm" value="703.07"/>
+
+    <xacro:macro name="sw_origin" params="x y z roll:=0 pitch:=0 yaw:=0">
+        <origin xyz="${x*intom} ${-z*intom} ${y*intom}" rpy="${roll} ${pitch} ${yaw}"/>
+    </xacro:macro>
+
+    <xacro:macro name="sw_visual" params="file">
+        <visual>
+            <origin xyz="0 0 0" rpy="${radians(90)} 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find arm_control)/description/meshes/${file}.STL" />
+            </geometry>
+            <material name="white"/>
+        </visual>
+    </xacro:macro>
+
+    <!-- Units: lb, in, lb*in^2 -->
+    <xacro:macro name="sw_inertial" params="m X Y Z Lxx Lxy Lxz Lyy Lyz Lzz file">
+        <inertial>
+            <mass value="${m*lbtokg}"/>
+            <xacro:sw_origin x="${X}" y="${Y}" z="${Z}"/>
+            <inertia
+                ixx="${Lxx*lbsqintokgsqm}" ixy="${Lxz*lbsqintokgsqm}" ixz="${-Lxy*lbsqintokgsqm}"
+                iyy="${Lzz*lbsqintokgsqm}" iyz="${-Lyz*lbsqintokgsqm}"
+                izz="${Lyy*lbsqintokgsqm}"/>
+        </inertial>
+        <collision>
+            <xacro:sw_origin x="${X}" y="${Y}" z="${Z}"/>
+            <geometry>
+                <mesh filename="file://$(find arm_control)/description/meshes/${file}.STL" />
+            </geometry>
+        </collision>
+    </xacro:macro>
+
+    <xacro:macro name="sw_origin" params="x y z roll:=0 pitch:=0 yaw:=0">
+        <origin xyz="${x*intom} ${-z*intom} ${y*intom}" rpy="${roll} ${pitch} ${yaw}"/>
+    </xacro:macro>
+
+    <xacro:macro name="arm_component" params="namespace component_number type parent_link child_link mass axis Lxx Lxy Lxz Lyy Lyz Lzz file inertiaX inertiaY inertiaZ effort_limit lower_limit upper_limit velocity_limit joint_X joint_Y joint_Z">
+        <link name="${namespace}_arm_a${component_number}">
+            <visual>
+                <origin rpy="${radians(90)} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="file://$(find arm_control)/description/meshes/${file}.STL" />
+                </geometry>
+                <material name="white"/>
+            </visual>
+
+            <inertial>
+                <mass value="${mass}"/>
+                <origin xyz="${inertiaX*intom} ${-inertiaZ*intom} ${inertiaY*intom}" rpy="0 0 0"/>
+                <inertia 
+                    ixx="${Lxx*lbsqintokgsqm}" ixy="${Lxz*lbsqintokgsqm}" ixz="${-Lxy*lbsqintokgsqm}" 
+                    iyy="${Lzz*lbsqintokgsqm}" iyz="${-Lyz*lbsqintokgsqm}"
+                    izz="${Lyy*lbsqintokgsqm}"/>
+            </inertial>
+<!-- 
+            <collision>
+                <origin rpy="${radians(90)} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="file://$(find arm_control)/description/meshes/${file}.STL" />
+                </geometry>
+            </collision> -->
+        </link>
+
+        <joint name="${namespace}_arm_j${component_number}" type="${type}">
+            <origin xyz="${joint_X*intom} ${-joint_Z*intom} ${joint_Y*intom}" rpy="0 0 0"/>
+            <parent link="${parent_link}"/>
+            <child link="${child_link}"/>
+            <axis xyz="${axis}"/>
+            <limit effort="${effort_limit}" lower="${lower_limit}" upper="${upper_limit}" velocity="${velocity_limit}"/>
+        </joint>
+
+    </xacro:macro>
+
+</robot>
