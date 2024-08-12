@@ -16,6 +16,7 @@ find_package(rclpy REQUIRED)
 include_directories(include)
 include_directories(description)
 include_directories(arm_control)
+include_directories(launch)
 include_directories(config)
 
 # Create cpp executables
@@ -49,6 +50,7 @@ install(PROGRAMS
 install(DIRECTORY
   config
   description
+  launch
   DESTINATION share/${PROJECT_NAME}/
 )
 
