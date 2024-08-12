@@ -16,6 +16,7 @@ find_package(rclpy REQUIRED)
 include_directories(include)
 include_directories(description)
 include_directories(arm_control)
+include_directories(config)
 
 # Create cpp executables
 # add_executable(cpp_exe src/cpp_node.cpp)
@@ -38,10 +39,20 @@ ament_python_install_package(${PROJECT_NAME})
 #  DESTINATION lib/${PROJECT_NAME}
 #)
 
+
+# *************** Launch Files ***************
+
+install(DIRECTORY
+  config
+  description
+  DESTINATION share/${PROJECT_NAME}/
+)
+
 install(DIRECTORY description/mesh
   DESTINATION share/${PROJECT_NAME}/description
   FILES_MATCHING PATTERN "*.STL"
 )
+
 
 
 
