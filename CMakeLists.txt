@@ -37,11 +37,15 @@ ament_python_install_package(${PROJECT_NAME})
 # Install Python executables
 
 install(PROGRAMS
+  scripts/PID.py
   scripts/rover_states_encoder.py
   scripts/rover_states_decoder.py
   scripts/base_station_encoder.py
   scripts/base_station_decoder.py
-  scripts/PID.py
+  networking/base_station_transmitter.py
+  networking/base_station_receiver.py
+  networking/rover_receiver.py
+  networking/rover_transmitter.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
