@@ -40,6 +40,7 @@ install(PROGRAMS
   scripts/rover_states_decoder.py
   scripts/base_station_encoder.py
   scripts/base_station_decoder.py
+  scripts/PID.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
