@@ -12,7 +12,6 @@ For controlling the arm, the [joint_state_publisher_gui](http://wiki.ros.org/joi
 ## Hardware Set Up
 ![image](https://github.com/user-attachments/assets/de9e33ef-bf9d-4f77-89f7-fcf621aa22ed)
 
-
 ## Launch
 1. First clone the repository inside of your src folders in a working ros2 worksapce.
 2. Build and soruce the worksapce
@@ -27,3 +26,5 @@ ros2 launch arm_control rover_arm_hardware.luanch.py
 ```
 ros2 launch arm_control base_station.launch.py
 ```
+## Extra instruction
+- Dont forget to change the UDP channels and addresses, the current repository has everything running on localhost.
