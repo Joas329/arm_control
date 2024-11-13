@@ -10,10 +10,10 @@ class UdpStringSender(Node):
         super().__init__('udp_string_sender')
         self.declare_parameter('udp_hostname', 'localhost')
         self.declare_parameter('udp_port', 5001)
-        
+
         hostname = self.get_parameter('udp_hostname').get_parameter_value().string_value
         port = self.get_parameter('udp_port').get_parameter_value().integer_value
-        
+
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.address = (hostname, port)
 
