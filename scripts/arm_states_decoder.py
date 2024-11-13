@@ -40,7 +40,7 @@ def main(args=None):
     decoder = JointStateDecoder()
     color_start = "\033[35m"
     color_reset = "\033[0m"
-    decoder.get_logger().info(f"{color_start}Decoding /udp_receiver (rover) to /decoded/desired_joint_states{color_reset}")
+    decoder.get_logger().info(f"{color_start}Decoding /udp_receiver (arm) to /decoded/desired_joint_states{color_reset}")
     rclpy.spin(decoder)
     decoder.destroy_node()
     rclpy.shutdown()
