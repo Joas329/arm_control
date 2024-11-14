@@ -18,7 +18,7 @@ class UdpReceiverNode(Node):
 
         # publisher
         self.publisher = self.create_publisher(String, '/udp_receiver', 10)
-        
+
         # timer callback
         self.timer = self.create_timer(0.1, self.listen)
 

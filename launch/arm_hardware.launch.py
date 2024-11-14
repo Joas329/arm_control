@@ -31,7 +31,7 @@ package_name='arm_control'
 
 def generate_launch_description():
 
-    print("Launching arm rover part: ")
+    print("Launching arm part: ")
 
     # ****************** Robot Description ****************** #
 
@@ -79,7 +79,7 @@ def generate_launch_description():
 
     joint_encoder_spawner = Node(
         package=package_name,
-        executable="rover_states_encoder.py",
+        executable="arm_states_encoder.py",
         output="both",
     )
 
@@ -87,7 +87,7 @@ def generate_launch_description():
 
     joint_decoder_spawner = Node(
         package=package_name,
-        executable="rover_states_decoder.py",
+        executable="arm_states_decoder.py",
         output="both",
     )
 
@@ -95,7 +95,7 @@ def generate_launch_description():
 
     udp_transmitter = Node(
         package=package_name,
-        executable="rover_transmitter.py",
+        executable="arm_transmitter.py",
         output="both",
     )
 
@@ -103,7 +103,7 @@ def generate_launch_description():
 
     udp_receiver = Node(
         package=package_name,
-        executable="rover_receiver.py",
+        executable="arm_receiver.py",
         output="both",
     )
 

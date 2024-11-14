@@ -14,11 +14,11 @@ class UdpReceiverNode(Node):
         # Set up the UDP socket to non-blocking mode
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.socket.bind(('0.0.0.0', port))
-        self.socket.setblocking(False) 
+        self.socket.setblocking(False)
 
         # publisher
         self.publisher = self.create_publisher(String, '/udp_receiver', 10)
-        
+
         # timer callback
         self.timer = self.create_timer(0.1, self.listen)
 

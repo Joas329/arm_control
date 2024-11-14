@@ -38,14 +38,14 @@ ament_python_install_package(${PROJECT_NAME})
 
 install(PROGRAMS
   scripts/PID.py
-  scripts/rover_states_encoder.py
-  scripts/rover_states_decoder.py
+  scripts/arm_states_encoder.py
+  scripts/arm_states_decoder.py
   scripts/base_station_encoder.py
   scripts/base_station_decoder.py
   networking/base_station_transmitter.py
   networking/base_station_receiver.py
-  networking/rover_receiver.py
-  networking/rover_transmitter.py
+  networking/arm_receiver.py
+  networking/arm_transmitter.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
