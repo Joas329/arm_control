@@ -3,22 +3,22 @@
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
-  name="RoboticArmv2">
+  name="robotic_arm">
   <link
     name="base_link">
     <inertial>
       <origin
-        xyz="-0.038799 5.6771E-08 0.039037"
+        xyz="-0.064318 0.039257 -2.9623E-07"
         rpy="0 0 0" />
       <mass
-        value="4.037" />
+        value="0.83438" />
       <inertia
-        ixx="0.0047485"
-        ixy="6.9936E-08"
-        ixz="2.5452E-06"
-        iyy="0.01214"
-        iyz="-4.4737E-10"
-        izz="0.015979" />
+        ixx="0.00098057"
+        ixy="2.6509E-06"
+        ixz="-6.484E-08"
+        iyy="0.0033643"
+        iyz="3.8674E-10"
+        izz="0.0027303" />
     </inertial>
     <visual>
       <origin
@@ -44,14 +44,11 @@
       </geometry>
     </collision>
   </link>
-
-  <!--Link 1-->
-
   <link
-    name="Link1">
+    name="Link2">
     <inertial>
       <origin
-        xyz="4.7367E-05 0.10068 0.020948"
+        xyz="4.7367E-05 0.10668 0.020948"
         rpy="0 0 0" />
       <mass
         value="0.97007" />
@@ -69,7 +66,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link1.STL" />
+          filename="package://arm_control/description/meshes/Link2.STL" />
       </geometry>
       <material
         name="">
@@ -83,7 +80,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link1.STL" />
+          filename="package://arm_control/description/meshes/Link2.STL" />
       </geometry>
     </collision>
   </link>
@@ -91,35 +88,32 @@
     name="J1"
     type="revolute">
     <origin
-      xyz="0 0 0.0059964"
+      xyz="0 0 0"
       rpy="1.5708 0 0" />
     <parent
       link="base_link" />
     <child
-      link="Link1" />
+      link="Link2" />
     <axis
-      xyz="0 -1 0" />
+      xyz="0 1 0" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="0"
+      upper="6.28"
       effort="10"
       velocity="10" />
   </joint>
-
-  <!--Link 2-->
-
   <link
-    name="Link2">
+    name="Link3">
     <inertial>
       <origin
-        xyz="-1.46417876076469E-06 0.117729185705366 -0.0378668860722142"
+        xyz="-1.46417876076533E-06 0.117729185705366 -0.0378668860722142"
         rpy="0 0 0" />
       <mass
-        value="0.577415758791343" />
+        value="0.577415758791342" />
       <inertia
         ixx="0.0036047406071256"
-        ixy="6.4776030540196E-08"
-        ixz="1.20114307201048E-07"
+        ixy="6.47760305401987E-08"
+        ixz="1.20114307201049E-07"
         iyy="0.000412136925722125"
         iyz="-1.52201263463148E-05"
         izz="0.00360983067595921" />
@@ -130,7 +124,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link2.STL" />
+          filename="package://arm_control/description/meshes/Link3.STL" />
       </geometry>
       <material
         name="">
@@ -144,7 +138,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link2.STL" />
+          filename="package://arm_control/description/meshes/Link3.STL" />
       </geometry>
     </collision>
   </link>
@@ -152,24 +146,22 @@
     name="J2"
     type="revolute">
     <origin
-      xyz="0 0.134 0"
+      xyz="0 0.14 0"
       rpy="0 0 0" />
     <parent
-      link="Link1" />
-    <child
       link="Link2" />
+    <child
+      link="Link3" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
-      lower="-1.57"
-      upper="1.57"
-      effort="0"
-      velocity="0" />
+      lower="-1.570796"
+      upper="1.570796"
+      effort="10"
+      velocity="10" />
   </joint>
-
-  <!--Link 3-->
   <link
-    name="Link3">
+    name="Link4">
     <inertial>
       <origin
         xyz="-0.0328882111255075 8.45678153449381E-07 -0.0129958354849986"
@@ -178,10 +170,10 @@
         value="0.251663957012598" />
       <inertia
         ixx="6.72067273429369E-05"
-        ixy="4.83904268931055E-09"
-        ixz="-2.18784718458254E-08"
+        ixy="4.83904268931015E-09"
+        ixz="-2.18784718458252E-08"
         iyy="0.000125285505512965"
-        iyz="3.49876261972673E-15"
+        iyz="3.49876226111741E-15"
         izz="0.000132327236956115" />
     </inertial>
     <visual>
@@ -190,7 +182,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link3.STL" />
+          filename="package://arm_control/description/meshes/Link4.STL" />
       </geometry>
       <material
         name="">
@@ -204,7 +196,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link3.STL" />
+          filename="package://arm_control/description/meshes/Link4.STL" />
       </geometry>
     </collision>
   </link>
@@ -215,34 +207,32 @@
       xyz="0 0.322 0"
       rpy="0 0 0" />
     <parent
-      link="Link2" />
-    <child
       link="Link3" />
+    <child
+      link="Link4" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
-      lower="0"
-      upper="3.14"
+      lower="-1.5708"
+      upper="1.5708"
       effort="10"
       velocity="10" />
   </joint>
-
-  <!--Link 4-->
   <link
-    name="Link4">
+    name="Link5">
     <inertial>
       <origin
-        xyz="0.099774322521478 -0.000172379735017603 0.00118588583890608"
+        xyz="0.0959443943416938 -0.000157341805081312 0.00107507946414181"
         rpy="0 0 0" />
       <mass
-        value="0.356013835274962" />
+        value="0.300029724080392" />
       <inertia
-        ixx="0.000270166646517537"
-        ixy="-2.8024785401758E-07"
-        ixz="-2.10227432082948E-05"
-        iyy="0.00116383385329662"
-        iyz="-8.06758147658775E-08"
-        izz="0.000994142094397537" />
+        ixx="0.000212980238434561"
+        ixy="-2.15575269645667E-07"
+        ixz="-1.61941970571356E-05"
+        iyy="0.000911097635242398"
+        iyz="-6.20583191016507E-08"
+        izz="0.000780565263645566" />
     </inertial>
     <visual>
       <origin
@@ -250,7 +240,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link4.STL" />
+          filename="package://arm_control/description/meshes/Link5.STL" />
       </geometry>
       <material
         name="">
@@ -264,7 +254,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link4.STL" />
+          filename="package://arm_control/description/meshes/Link5.STL" />
       </geometry>
     </collision>
   </link>
@@ -275,34 +265,32 @@
       xyz="0.03 0 0"
       rpy="0 0 0" />
     <parent
-      link="Link3" />
-    <child
       link="Link4" />
+    <child
+      link="Link5" />
     <axis
       xyz="1 0 0" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="0"
+      upper="6.28"
       effort="10"
       velocity="10" />
   </joint>
-
-  <!--Link 5-->
   <link
-    name="Link5">
+    name="Link6">
     <inertial>
       <origin
-        xyz="-0.00745918037903059 1.44166386780165E-05 -0.00833926520904369"
+        xyz="-0.00928310094878421 1.2483555139553E-05 -0.00856165178953772"
         rpy="0 0 0" />
       <mass
-        value="0.175482504091363" />
+        value="0.155889261418066" />
       <inertia
-        ixx="5.10545535580843E-05"
-        ixy="-5.97452165278952E-08"
-        ixz="1.44581078477868E-06"
-        iyy="0.000107503817667908"
-        iyz="5.76444930838975E-09"
-        izz="0.000100856356891325" />
+        ixx="4.28549661625321E-05"
+        ixy="-4.59578584586532E-08"
+        ixz="1.10962985052539E-06"
+        iyy="9.76511984630011E-05"
+        iyz="4.4341918291842E-09"
+        izz="9.25375630975331E-05" />
     </inertial>
     <visual>
       <origin
@@ -310,7 +298,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link5.STL" />
+          filename="package://arm_control/description/meshes/Link6.STL" />
       </geometry>
       <material
         name="">
@@ -324,7 +312,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link5.STL" />
+          filename="package://arm_control/description/meshes/Link6.STL" />
       </geometry>
     </collision>
   </link>
@@ -335,21 +323,19 @@
       xyz="0.20275 0 0"
       rpy="3.1416 0 0" />
     <parent
-      link="Link4" />
-    <child
       link="Link5" />
+    <child
+      link="Link6" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
-      lower="-1.57"
-      upper="1.57"
+      lower="-1.570796"
+      upper="1.570796"
       effort="10"
       velocity="10" />
   </joint>
-
-  <!--Link 6-->
   <link
-    name="Link6">
+    name="Link7">
     <inertial>
       <origin
         xyz="0.00833988976417116 0.000113774503086972 -1.32769045757541E-10"
@@ -359,9 +345,9 @@
       <inertia
         ixx="2.02217071919662E-06"
         ixy="5.87479646435333E-09"
-        ixz="-8.97698504642466E-15"
+        ixz="-8.97698504636946E-15"
         iyy="1.3204524747585E-06"
-        iyz="-1.52963229446115E-14"
+        iyz="-1.52963229443247E-14"
         izz="1.3036592664547E-06" />
     </inertial>
     <visual>
@@ -370,7 +356,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link6.STL" />
+          filename="package://arm_control/description/meshes/Link7.STL" />
       </geometry>
       <material
         name="">
@@ -384,7 +370,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://arm_control/description/meshes/Link6.STL" />
+          filename="package://arm_control/description/meshes/Link7.STL" />
       </geometry>
     </collision>
   </link>
@@ -395,67 +381,15 @@
       xyz="0.02825 0 -0.01"
       rpy="-3.1416 0 0" />
     <parent
-      link="Link5" />
-    <child
       link="Link6" />
+    <child
+      link="Link7" />
     <axis
       xyz="1 0 0" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="0"
+      upper="6.28"
       effort="10"
       velocity="10" />
   </joint>
-
-
-
-  <!--Defining ROS2 Control Joints-->
-  <ros2_control name="GazeboSystem" type="system">
-    <hardware>
-      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-    </hardware>
-    <joint name="J1">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">180</param>
-      </state_interface>
-    </joint>
-    <joint name="J2">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">-1</param>
-      </state_interface>
-    </joint>
-    <joint name="J3">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">-120</param>
-      </state_interface>
-    </joint>
-    <joint name="J4">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">1</param>
-      </state_interface>
-    </joint>
-    <joint name="J5">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">-11</param>
-      </state_interface>
-    </joint>
-    <joint name="J6">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">3</param>
-      </state_interface>
-    </joint>
-  </ros2_control>
-  <gazebo>
-    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-      <parameters> /home/joas329/Desktop/yurs/arm_control/install/arm_control/share/arm_control/config/arm_controllers.yaml</parameters>
-
-    </plugin>
-  </gazebo>
-
 </robot>

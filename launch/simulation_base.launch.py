@@ -1,10 +1,13 @@
 import os
 from ament_index_python.packages import get_package_share_directory
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import Command, LaunchConfiguration
+from launch.actions import IncludeLaunchDescription
+from launch.actions import ExecuteProcess, IncludeLaunchDescription, RegisterEventHandler
+from launch.event_handlers import OnProcessExit
+
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.descriptions import ParameterValue
 import xacro
@@ -28,7 +31,7 @@ package_name='arm_control'
 
 def generate_launch_description():
     pkg_path = os.path.join(get_package_share_directory(package_name))
-    xacro_file = os.path.join(pkg_path,'description','robotic_arm.urdf.xacro')
+    xacro_file = os.path.join(pkg_path,'description','arm_hardware.urdf.xacro')
     urdf_file = os.path.join(pkg_path, 'description', 'robotic_arm_4.urdf')
 
     # ****************** Robot 1 ****************** #
@@ -36,7 +39,7 @@ def generate_launch_description():
     static_transform_node1 = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
-        arguments=['0', '0', '0', '0', '0', '0', 'world', 'robot1_pre_base_link'],
+        arguments=['0', '0', '0', '0', '0', '0', 'world', 'robot1_base_link'],
         output='screen'
     )
 
@@ -51,7 +54,7 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         namespace="robot1",
-        parameters=[robot1_description],
+        parameters=[{'robot_description': open(urdf_file).read()}],
         remappings=[
             ('joint_states', '/decoded/joint_states')
         ],
@@ -69,7 +72,7 @@ def generate_launch_description():
     static_transform_node2 = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
-        arguments=['0', '0', '0', '0', '0', '0', 'world', 'robot2_pre_base_link'],
+        arguments=['0', '0', '0', '0', '0', '0', 'world', 'robot2_base_link'],
         output='screen'
     )
 
@@ -140,14 +143,23 @@ def generate_launch_description():
         output='screen'
     )
 
-    # ****************** Gazebo ****************** #
+    # ****************** GAZEBO ****************** #
 
-    gazebo_launch_path = os.path.join(get_package_share_directory('gazebo_ros'), 'launch')
+    # gazebo = IncludeLaunchDescription(
+    #             PythonLaunchDescriptionSource([os.path.join(
+    #                 get_package_share_directory('arm_control'), 'launch'), '/simulation_base.launch.py']),
+    #          )
 
-    gazebo_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(os.path.join(gazebo_launch_path, 'gzserver.launch.py')),
-        launch_arguments={'world': os.path.join(pkg_path, 'worlds', 'robots_world.sdf')}.items(),
+    spawn_entity = Node(
+        package='gazebo_ros',
+        executable='spawn_entity.py',
+        arguments=[
+            '-topic', 'robot1/robot_description',
+            '-entity', 'RoboticArmv2'
+        ],
+        output='screen'
     )
+
 
     return LaunchDescription([
         robot1_state_pub_node,
@@ -160,6 +172,13 @@ def generate_launch_description():
         joint_encoder_spawner,
         udp_transmitter,
         udp_receiver,
-        gazebo_launch,
-        rviz_node
+        rviz_node,  
+        RegisterEventHandler(
+            OnProcessExit(
+                target_action = robot1_state_pub_node,
+                on_exit = [
+                    spawn_entity,
+                ]
+            )
+        ),        
     ])

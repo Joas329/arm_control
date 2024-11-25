@@ -3,22 +3,22 @@
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
-  name="RoboticArmv2">
+  name="robotic_arm_2">
   <link
     name="base_link">
     <inertial>
       <origin
-        xyz="-0.038799 5.6771E-08 0.039037"
+        xyz="-0.064318 2.9623E-07 0.039257"
         rpy="0 0 0" />
       <mass
-        value="4.037" />
+        value="0.83438" />
       <inertia
-        ixx="0.0047485"
-        ixy="6.9936E-08"
-        ixz="2.5452E-06"
-        iyy="0.01214"
-        iyz="-4.4737E-10"
-        izz="0.015979" />
+        ixx="0.00098057"
+        ixy="6.484E-08"
+        ixz="2.6509E-06"
+        iyy="0.0027303"
+        iyz="-3.8674E-10"
+        izz="0.0033643" />
     </inertial>
     <visual>
       <origin
@@ -44,85 +44,21 @@
       </geometry>
     </collision>
   </link>
-
-  <!--Link 1-->
-
-  <link
-    name="Link1">
-    <inertial>
-      <origin
-        xyz="4.7367E-05 0.10068 0.020948"
-        rpy="0 0 0" />
-      <mass
-        value="0.97007" />
-      <inertia
-        ixx="0.0010278"
-        ixy="-3.2684E-07"
-        ixz="-5.2705E-07"
-        iyy="0.001187"
-        iyz="2.9768E-06"
-        izz="0.00070562" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://arm_control/description/meshes/Link1.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.75294 0.75294 0.75294 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://arm_control/description/meshes/Link1.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="J1"
-    type="revolute">
-    <origin
-      xyz="0 0 0.0059964"
-      rpy="1.5708 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="Link1" />
-    <axis
-      xyz="0 -1 0" />
-    <limit
-      lower="-3.14"
-      upper="3.14"
-      effort="10"
-      velocity="10" />
-  </joint>
-
-  <!--Link 2-->
-
   <link
     name="Link2">
     <inertial>
       <origin
-        xyz="-1.46417876076469E-06 0.117729185705366 -0.0378668860722142"
+        xyz="4.73671831842074E-05 0.106679007769717 0.0209476634854827"
         rpy="0 0 0" />
       <mass
-        value="0.577415758791343" />
+        value="0.970074967448887" />
       <inertia
-        ixx="0.0036047406071256"
-        ixy="6.4776030540196E-08"
-        ixz="1.20114307201048E-07"
-        iyy="0.000412136925722125"
-        iyz="-1.52201263463148E-05"
-        izz="0.00360983067595921" />
+        ixx="0.00102783014668973"
+        ixy="-3.26835540486067E-07"
+        ixz="-5.27045735747468E-07"
+        iyy="0.00118699235618725"
+        iyz="2.97677287496639E-06"
+        izz="0.000705617069557207" />
     </inertial>
     <visual>
       <origin
@@ -152,37 +88,35 @@
     name="J2"
     type="revolute">
     <origin
-      xyz="0 0.134 0"
-      rpy="0 0 0" />
+      xyz="0 0 0"
+      rpy="1.5708 0 0" />
     <parent
-      link="Link1" />
+      link="base_link" />
     <child
       link="Link2" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 1 0" />
     <limit
-      lower="-1.57"
-      upper="1.57"
-      effort="0"
-      velocity="0" />
+      lower="0"
+      upper="6.2832"
+      effort="10"
+      velocity="10" />
   </joint>
-
-  <!--Link 3-->
   <link
     name="Link3">
     <inertial>
       <origin
-        xyz="-0.0328882111255075 8.45678153449381E-07 -0.0129958354849986"
+        xyz="-1.46417876076557E-06 0.117729185705366 -0.0378668860722142"
         rpy="0 0 0" />
       <mass
-        value="0.251663957012598" />
+        value="0.577415758791343" />
       <inertia
-        ixx="6.72067273429369E-05"
-        ixy="4.83904268931055E-09"
-        ixz="-2.18784718458254E-08"
-        iyy="0.000125285505512965"
-        iyz="3.49876261972673E-15"
-        izz="0.000132327236956115" />
+        ixx="0.0036047406071256"
+        ixy="6.47760305401943E-08"
+        ixz="1.20114307201048E-07"
+        iyy="0.000412136925722125"
+        iyz="-1.52201263463148E-05"
+        izz="0.00360983067595921" />
     </inertial>
     <visual>
       <origin
@@ -212,37 +146,35 @@
     name="J3"
     type="revolute">
     <origin
-      xyz="0 0.322 0"
+      xyz="0 0.14 0"
       rpy="0 0 0" />
     <parent
       link="Link2" />
     <child
       link="Link3" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
-      lower="0"
-      upper="3.14"
+      lower="-1.5708"
+      upper="1.5708"
       effort="10"
       velocity="10" />
   </joint>
-
-  <!--Link 4-->
   <link
     name="Link4">
     <inertial>
       <origin
-        xyz="0.099774322521478 -0.000172379735017603 0.00118588583890608"
+        xyz="-0.0328882111255075 8.45678153560403E-07 -0.0129958354849986"
         rpy="0 0 0" />
       <mass
-        value="0.356013835274962" />
+        value="0.251663957012598" />
       <inertia
-        ixx="0.000270166646517537"
-        ixy="-2.8024785401758E-07"
-        ixz="-2.10227432082948E-05"
-        iyy="0.00116383385329662"
-        iyz="-8.06758147658775E-08"
-        izz="0.000994142094397537" />
+        ixx="6.72067273429369E-05"
+        ixy="4.83904268931065E-09"
+        ixz="-2.18784718458254E-08"
+        iyy="0.000125285505512965"
+        iyz="3.4987623387703E-15"
+        izz="0.000132327236956115" />
     </inertial>
     <visual>
       <origin
@@ -272,37 +204,35 @@
     name="J4"
     type="revolute">
     <origin
-      xyz="0.03 0 0"
+      xyz="0 0.322 0"
       rpy="0 0 0" />
     <parent
       link="Link3" />
     <child
       link="Link4" />
     <axis
-      xyz="1 0 0" />
+      xyz="0 0 1" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="0"
+      upper="6.28"
       effort="10"
       velocity="10" />
   </joint>
-
-  <!--Link 5-->
   <link
     name="Link5">
     <inertial>
       <origin
-        xyz="-0.00745918037903059 1.44166386780165E-05 -0.00833926520904369"
+        xyz="0.0959443943338804 -0.000157341807048905 0.0010750794524604"
         rpy="0 0 0" />
       <mass
-        value="0.175482504091363" />
+        value="0.300029723918034" />
       <inertia
-        ixx="5.10545535580843E-05"
-        ixy="-5.97452165278952E-08"
-        ixz="1.44581078477868E-06"
-        iyy="0.000107503817667908"
-        iyz="5.76444930838975E-09"
-        izz="0.000100856356891325" />
+        ixx="0.000212980238341323"
+        ixy="-2.15575275811437E-07"
+        ixz="-1.6194197089621E-05"
+        iyy="0.000911097635143181"
+        iyz="-6.20583067747309E-08"
+        izz="0.000780565263602578" />
     </inertial>
     <visual>
       <origin
@@ -332,37 +262,35 @@
     name="J5"
     type="revolute">
     <origin
-      xyz="0.20275 0 0"
-      rpy="3.1416 0 0" />
+      xyz="0.03 0 0"
+      rpy="0 0 0" />
     <parent
       link="Link4" />
     <child
       link="Link5" />
     <axis
-      xyz="0 0 -1" />
+      xyz="1 0 0" />
     <limit
-      lower="-1.57"
-      upper="1.57"
+      lower="0"
+      upper="6.28"
       effort="10"
       velocity="10" />
   </joint>
-
-  <!--Link 6-->
   <link
     name="Link6">
     <inertial>
       <origin
-        xyz="0.00833988976417116 0.000113774503086972 -1.32769045757541E-10"
+        xyz="-0.00928309942886629 1.2483555139553E-05 0.000438348836310247"
         rpy="0 0 0" />
       <mass
-        value="0.0135263682638669" />
+        value="0.155889261418066" />
       <inertia
-        ixx="2.02217071919662E-06"
-        ixy="5.87479646435333E-09"
-        ixz="-8.97698504642466E-15"
-        iyy="1.3204524747585E-06"
-        iyz="-1.52963229446115E-14"
-        izz="1.3036592664547E-06" />
+        ixx="4.2854966162532E-05"
+        ixy="-4.5957858458414E-08"
+        ixz="1.10962985052551E-06"
+        iyy="9.76511984630009E-05"
+        iyz="4.43419182917848E-09"
+        izz="9.25375630975329E-05" />
     </inertial>
     <visual>
       <origin
@@ -392,70 +320,76 @@
     name="J6"
     type="revolute">
     <origin
-      xyz="0.02825 0 -0.01"
-      rpy="-3.1416 0 0" />
+      xyz="0.20275 0 0"
+      rpy="0 0 0" />
     <parent
       link="Link5" />
     <child
       link="Link6" />
     <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="6.28"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="Link7">
+    <inertial>
+      <origin
+        xyz="0.00833988976417122 0.000113774503086916 -1.32771167541193E-10"
+        rpy="0 0 0" />
+      <mass
+        value="0.0135263682638669" />
+      <inertia
+        ixx="2.02217071919662E-06"
+        ixy="5.87479646435347E-09"
+        ixz="-8.97698504887139E-15"
+        iyy="1.3204524747585E-06"
+        iyz="-1.52963228539654E-14"
+        izz="1.3036592664547E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_control/description/meshes/Link7.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_control/description/meshes/Link7.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J7"
+    type="revolute">
+    <origin
+      xyz="0.02775 0 -0.001"
+      rpy="0 0 0" />
+    <parent
+      link="Link6" />
+    <child
+      link="Link7" />
+    <axis
       xyz="1 0 0" />
     <limit
-      lower="-3.14"
-      upper="3.14"
-      effort="10"
-      velocity="10" />
+      lower="0"
+      upper="6.28"
+      effort="0"
+      velocity="0" />
   </joint>
-
-
-
-  <!--Defining ROS2 Control Joints-->
-  <ros2_control name="GazeboSystem" type="system">
-    <hardware>
-      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-    </hardware>
-    <joint name="J1">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">180</param>
-      </state_interface>
-    </joint>
-    <joint name="J2">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">-1</param>
-      </state_interface>
-    </joint>
-    <joint name="J3">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">-120</param>
-      </state_interface>
-    </joint>
-    <joint name="J4">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">1</param>
-      </state_interface>
-    </joint>
-    <joint name="J5">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">-11</param>
-      </state_interface>
-    </joint>
-    <joint name="J6">
-      <command_interface name="effort"/>
-      <state_interface name="position">
-        <param name="initial_value">3</param>
-      </state_interface>
-    </joint>
-  </ros2_control>
-  <gazebo>
-    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-      <parameters> /home/joas329/Desktop/yurs/arm_control/install/arm_control/share/arm_control/config/arm_controllers.yaml</parameters>
-
-    </plugin>
-  </gazebo>
-
 </robot>

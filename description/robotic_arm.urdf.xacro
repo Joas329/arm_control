@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robotic_arm" >	
+
+	<xacro:arg name="namespace" default="robot1"/>
+	<xacro:include filename="macros.xacro"/>
+
+	<material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <material name="orange">
+        <color rgba="1 0.3 0.1 1"/>
+    </material>
+
+    <material name="blue">
+        <color rgba="0.2 0.2 1 1"/>
+    </material>
+
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+
+    	<!--Arm Links-->
+
+    <!--Dummy Link-->
+	<link name="$(arg namespace)_pre_base_link"/>
+    <joint name="$(arg namespace)_dummy_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="$(arg namespace)_pre_base_link"/>
+        <child link="$(arg namespace)_base_link"/>
+    </joint>
+
+	<!--Link 1-->
+    <xacro:arm_component 
+        namespace="$(arg namespace)"
+        component_number="1"
+        type="revolute"
+        parent_link="$(arg namespace)_base_link"
+        child_link="$(arg namespace)_Link1"
+        mass="0.97007"
+        axis="0 -1 0"
+        Lxx="0.0010278"
+        Lxy="-3.2684E-07"
+        Lxz="-5.2705E-07"
+        Lyy="0.001187"
+        Lyz="2.9768E-06"
+        Lzz="0.00070562"
+        file="Link1"
+        inertiaX="0.0010278"
+        inertiaY="-3.2684E-07"
+        inertiaZ="-5.2705E-07"
+        effort_limit="10"
+        lower_limit="${radians(-3.14)}"
+        upper_limit="${radians(3.14)}"
+        velocity_limit="10"
+        joint_X="0"
+        joint_Y="0"
+        joint_Z="0.0059964"
+    />
+
+
+
+    <!--Arm 2-->
+    <xacro:arm_component 
+        namespace="$(arg namespace)"
+        component_number="2"
+        type="revolute"
+        parent_link="$(arg namespace)_Link1"
+        child_link="$(arg namespace)_Link2"
+        mass="0.577415758791343"
+        axis="0 0 -1"
+        Lxx="0.0036047406071256"
+        Lxy="6.4776030540196E-08"
+        Lxz="1.20114307201048E-07"
+        Lyy="0.000412136925722125"
+        Lyz="-1.52201263463148E-05"
+        Lzz="0.00360983067595921"
+        file="Link2"
+        inertiaX="0.0036047406071256"
+        inertiaY="6.4776030540196E-08"
+        inertiaZ="1.20114307201048E-07"
+        effort_limit="0"
+        lower_limit="${radians(-1.57)}"
+        upper_limit="${radians(1.57)}"
+        velocity_limit="0"
+        joint_X="0"
+        joint_Y="0.134"
+        joint_Z="0"
+    />
+
+    <!--Arm 3-->
+    <xacro:arm_component 
+        namespace="$(arg namespace)"
+        component_number="3"
+        type="revolute"
+        parent_link="$(arg namespace)_Link2"
+        child_link="$(arg namespace)_Link3"
+        mass="0.251663957012598"
+        axis="0 0 -1"
+        Lxx="6.72067273429369E-05"
+        Lxy="4.83904268931055E-09"
+        Lxz="-2.18784718458254E-08"
+        Lyy="0.000125285505512965"
+        Lyz="3.49876261972673E-15"
+        Lzz="0.000132327236956115"
+        file="Link3"
+        inertiaX="6.72067273429369E-05"
+        inertiaY="4.83904268931055E-09"
+        inertiaZ="-2.18784718458254E-08"
+        effort_limit="10"
+        lower_limit="${radians(0)}"
+        upper_limit="${radians(3.14)}"
+        velocity_limit="10"
+        joint_X="0"
+        joint_Y="0.322"
+        joint_Z="0"
+    />
+
+    <!--Arm 4-->
+    <xacro:arm_component 
+        namespace="$(arg namespace)"
+        component_number="4"
+        type="revolute"
+        parent_link="$(arg namespace)_Link3"
+        child_link="$(arg namespace)_Link4"
+        mass="0.356013835274962"
+        axis="1 0 0"
+        Lxx="0.000270166646517537"
+        Lxy="-2.8024785401758E-07"
+        Lxz="-2.10227432082948E-05"
+        Lyy="0.00116383385329662"
+        Lyz="-8.06758147658775E-08"
+        Lzz="0.000994142094397537"
+        file="Link4"
+        inertiaX="0.000270166646517537"
+        inertiaY="-2.8024785401758E-07"
+        inertiaZ="-2.10227432082948E-05"
+        effort_limit="10"
+        lower_limit="${radians(-3.14)}"
+        upper_limit="${radians(3.14)}"
+        velocity_limit="10"
+        joint_X="0.03"
+        joint_Y="0"
+        joint_Z="0"
+    />
+
+
+    <!--Arm 5-->
+    <xacro:arm_component 
+        namespace="$(arg namespace)"
+        component_number="5"
+        type="revolute"
+        parent_link="$(arg namespace)_Link4"
+        child_link="$(arg namespace)_Link5"
+        mass="0.175482504091363"
+        axis="0 0 -1"
+        Lxx="5.10545535580843E-05"
+        Lxy="-5.97452165278952E-08"
+        Lxz="1.44581078477868E-06"
+        Lyy="0.000107503817667908"
+        Lyz="5.76444930838975E-09"
+        Lzz="0.000100856356891325"
+        file="Link5"
+        inertiaX="5.10545535580843E-05"
+        inertiaY="-5.97452165278952E-08"
+        inertiaZ="1.44581078477868E-06"
+        effort_limit="10"
+        lower_limit="${radians(-1.57)}"
+        upper_limit="${radians(1.57)}"
+        velocity_limit="10"
+        joint_X="0.20275"
+        joint_Y="0"
+        joint_Z="0"
+    />
+
+
+    <!--Arm 6-->
+    <xacro:arm_component 
+        namespace="$(arg namespace)"
+        component_number="6"
+        type="revolute"
+        parent_link="$(arg namespace)_Link5"
+        child_link="$(arg namespace)_Link6"
+        mass="0.0135263682638669"
+        axis="1 0 0"
+        Lxx="2.02217071919662E-06"
+        Lxy="5.87479646435333E-09"
+        Lxz="-8.97698504642466E-15"
+        Lyy="1.3204524747585E-06"
+        Lyz="-1.52963229446115E-14"
+        Lzz="1.3036592664547E-06"
+        file="Link6"
+        inertiaX="2.02217071919662E-06"
+        inertiaY="5.87479646435333E-09"
+        inertiaZ="-8.97698504642466E-15"
+        effort_limit="10"
+        lower_limit="${radians(-3.14)}"
+        upper_limit="${radians(3.14)}"
+        velocity_limit="10"
+        joint_X="0.02825"
+        joint_Y="0"
+        joint_Z="-0.01"
+    />
+
+
+</robot>

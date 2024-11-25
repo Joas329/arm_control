@@ -1,0 +1,346 @@
+<sdf version='1.7'>
+  <model name='RoboticArmv2'>
+    <link name='base_link'>
+      <inertial>
+        <pose>-0.038799 0 0.039037 0 -0 0</pose>
+        <mass>4.037</mass>
+        <inertia>
+          <ixx>0.0047485</ixx>
+          <ixy>6.9936e-08</ixy>
+          <ixz>2.5452e-06</ixz>
+          <iyy>0.01214</iyy>
+          <iyz>-4.4737e-10</iyz>
+          <izz>0.015979</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_link_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/base_link.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='base_link_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/base_link.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J1' type='revolute'>
+      <pose relative_to='base_link'>0 0 0.005996 1.5708 -0 0</pose>
+      <parent>base_link</parent>
+      <child>Link1</child>
+      <axis>
+        <xyz>0 -1 0</xyz>
+        <limit>
+          <lower>-3.14</lower>
+          <upper>3.14</upper>
+          <effort>10</effort>
+          <velocity>10</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='Link1'>
+      <pose relative_to='J1'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>4.7e-05 0.10068 0.020948 0 -0 0</pose>
+        <mass>0.97007</mass>
+        <inertia>
+          <ixx>0.0010278</ixx>
+          <ixy>-3.2684e-07</ixy>
+          <ixz>-5.2705e-07</ixz>
+          <iyy>0.001187</iyy>
+          <iyz>2.9768e-06</iyz>
+          <izz>0.00070562</izz>
+        </inertia>
+      </inertial>
+      <collision name='Link1_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link1.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='Link1_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link1.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J2' type='revolute'>
+      <pose relative_to='Link1'>0 0.134 0 0 -0 0</pose>
+      <parent>Link1</parent>
+      <child>Link2</child>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>-1.57</lower>
+          <upper>1.57</upper>
+          <effort>0</effort>
+          <velocity>0</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='Link2'>
+      <pose relative_to='J2'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-1e-06 0.117729 -0.037867 0 -0 0</pose>
+        <mass>0.577416</mass>
+        <inertia>
+          <ixx>0.00360474</ixx>
+          <ixy>6.4776e-08</ixy>
+          <ixz>1.20114e-07</ixz>
+          <iyy>0.000412137</iyy>
+          <iyz>-1.52201e-05</iyz>
+          <izz>0.00360983</izz>
+        </inertia>
+      </inertial>
+      <collision name='Link2_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link2.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='Link2_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link2.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J3' type='revolute'>
+      <pose relative_to='Link2'>0 0.322 0 0 -0 0</pose>
+      <parent>Link2</parent>
+      <child>Link3</child>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>3.14</upper>
+          <effort>10</effort>
+          <velocity>10</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='Link3'>
+      <pose relative_to='J3'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-0.032888 1e-06 -0.012996 0 -0 0</pose>
+        <mass>0.251664</mass>
+        <inertia>
+          <ixx>6.72067e-05</ixx>
+          <ixy>4.83904e-09</ixy>
+          <ixz>-2.18785e-08</ixz>
+          <iyy>0.000125286</iyy>
+          <iyz>3.49876e-15</iyz>
+          <izz>0.000132327</izz>
+        </inertia>
+      </inertial>
+      <collision name='Link3_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link3.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='Link3_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link3.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J4' type='revolute'>
+      <pose relative_to='Link3'>0.03 0 0 0 -0 0</pose>
+      <parent>Link3</parent>
+      <child>Link4</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-3.14</lower>
+          <upper>3.14</upper>
+          <effort>10</effort>
+          <velocity>10</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='Link4'>
+      <pose relative_to='J4'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.099774 -0.000172 0.001186 0 -0 0</pose>
+        <mass>0.356014</mass>
+        <inertia>
+          <ixx>0.000270167</ixx>
+          <ixy>-2.80248e-07</ixy>
+          <ixz>-2.10227e-05</ixz>
+          <iyy>0.00116383</iyy>
+          <iyz>-8.06758e-08</iyz>
+          <izz>0.000994142</izz>
+        </inertia>
+      </inertial>
+      <collision name='Link4_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link4.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='Link4_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link4.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J5' type='revolute'>
+      <pose relative_to='Link4'>0.20275 0 0 -3.14159 0 0</pose>
+      <parent>Link4</parent>
+      <child>Link5</child>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>-1.57</lower>
+          <upper>1.57</upper>
+          <effort>10</effort>
+          <velocity>10</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='Link5'>
+      <pose relative_to='J5'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-0.007459 1.4e-05 -0.008339 0 -0 0</pose>
+        <mass>0.175483</mass>
+        <inertia>
+          <ixx>5.10546e-05</ixx>
+          <ixy>-5.97452e-08</ixy>
+          <ixz>1.44581e-06</ixz>
+          <iyy>0.000107504</iyy>
+          <iyz>5.76445e-09</iyz>
+          <izz>0.000100856</izz>
+        </inertia>
+      </inertial>
+      <collision name='Link5_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link5.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='Link5_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link5.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J6' type='revolute'>
+      <pose relative_to='Link5'>0.02825 0 -0.01 3.14159 -0 0</pose>
+      <parent>Link5</parent>
+      <child>Link6</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-3.14</lower>
+          <upper>3.14</upper>
+          <effort>10</effort>
+          <velocity>10</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='Link6'>
+      <pose relative_to='J6'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.00834 0.000114 -0 0 -0 0</pose>
+        <mass>0.0135264</mass>
+        <inertia>
+          <ixx>2.02217e-06</ixx>
+          <ixy>5.8748e-09</ixy>
+          <ixz>-8.97699e-15</ixz>
+          <iyy>1.32045e-06</iyy>
+          <iyz>-1.52963e-14</iyz>
+          <izz>1.30366e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='Link6_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link6.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='Link6_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://arm_control/description/meshes/Link6.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <static>0</static>
+    <plugin name='gazebo_ros2_control' filename='libgazebo_ros2_control.so'>
+      <parameters>/home/joas329/Desktop/yurs/arm_control/install/arm_control/share/arm_control/config/arm_controllers.yaml</parameters>
+    </plugin>
+  </model>
+</sdf>
