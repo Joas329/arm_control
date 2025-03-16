@@ -6,18 +6,16 @@ controller_manager:
       type: forward_command_controller/ForwardCommandController
       # type: joint_trajectory_controller/JointTrajectoryController
 
-
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
 arm_group_controller:
   ros__parameters:
     joints:
-      - arm_j1
-      - arm_j2
-      - arm_j3
-      - arm_j4
-      #- arm_j5
-      #- arm_j6
-      # - arm_j7
+      - robot1_J1
+      - robot1_J2
+      - robot1_J3
+      - robot1_J4
+      - robot1_J5
+      - robot1_J6
     interface_name: effort
