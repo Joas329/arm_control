@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Arm_Subassembly_URDF">
+
+	<xacro:arg name="namespace" default="robot1"/>
+
+  <!-- ################# Base Link ################# -->
+
+  <link name="$(arg namespace)_base_link">
+    <inertial>
+      <origin xyz="0.0074696 -0.15914 5.9232E-06" rpy="1.5707 0 0" />
+      <mass value="0.89677" />
+      <inertia
+        ixx="0.009127"
+        ixy="5.9488E-07"
+        ixz="4.0745E-06"
+        iyy="0.010021"
+        iyz="-1.2406E-07"
+        izz="0.0010085" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/base_link.STL" />
+      </geometry>
+      <material  name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ################# Link 1 ################# -->
+
+  <link
+    name="$(arg namespace)_link1">
+    <inertial>
+      <origin xyz="5.5511E-17 0.030991 -0.0022519" rpy="0 0 0" />
+      <mass
+        value="0.70793" />
+      <inertia
+        ixx="0.00090071"
+        ixy="9.2346E-20"
+        ixz="1.13E-20"
+        iyy="0.00090673"
+        iyz="1.7053E-19"
+        izz="0.00097473" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link1.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="$(arg namespace)_joint1" type="revolute">
+    <origin xyz="0 0 0" rpy="1.5707 0 0" />
+    <parent link="$(arg namespace)_base_link" />
+    <child link="$(arg namespace)_link1" />
+    <axis xyz="0 -1 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+
+  <!-- ################# Link 2 ################# -->
+
+  <link name="$(arg namespace)_link2">
+    <inertial>
+      <origin xyz="-0.16168 0.16167 -0.0057429" rpy="0 0 0" />
+      <mass value="1.3902" />
+      <inertia
+        ixx="0.0070597"
+        ixy="0.0063524"
+        ixz="1.0167E-06"
+        iyy="0.007076"
+        iyz="-6.6584E-07"
+        izz="0.013604" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link2.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="$(arg namespace)_joint2" type="revolute">
+    <origin xyz="0 0.092075 -0.063263" rpy="0 0 0" />
+    <parent link="$(arg namespace)_link1" />
+    <child link="$(arg namespace)_link2" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+
+  <!-- ################# Link 3 ################# -->
+
+  <link name="$(arg namespace)_link3">
+    <inertial>
+      <origin xyz="0.21018 -1.6046E-06 0.061943" rpy="0 0 0" />
+      <mass value="1.4802" />
+      <inertia
+        ixx="0.0012973"
+        ixy="4.0422E-08"
+        ixz="-1.4907E-07"
+        iyy="0.013379"
+        iyz="1.9416E-08"
+        izz="0.013281" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link3.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="$(arg namespace)_joint3" type="revolute">
+    <origin xyz="-0.32329 0.32329 0" rpy="0 0 0" />
+    <parent link="$(arg namespace)_link2" />
+    <child link="$(arg namespace)_link3" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+
+  <!-- ################# Link 4 ################# -->
+
+  <link name="$(arg namespace)_link4">
+    <inertial>
+      <origin xyz="0.35834 -2.0385E-06 0.011812" rpy="0 0 0" />
+      <mass value="0.73907" />
+      <inertia
+        ixx="0.00060066"
+        ixy="1.9422E-08"
+        ixz="-2.9125E-07"
+        iyy="0.0022292"
+        iyz="-4.0422E-08"
+        izz="0.0018828" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link4.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="$(arg namespace)_joint4" type="revolute">
+    <origin xyz="0.11713 0 0.063262" rpy="0 0 0" />
+    <parent link="$(arg namespace)_link3" />
+    <child link="$(arg namespace)_link4" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+
+  <!-- ################# Link 5 ################# -->
+
+  <link name="$(arg namespace)_link5">
+    <inertial>
+      <origin xyz="0.040288 9.9448E-06 -0.060464" rpy="0 0 0" />
+      <mass value="0.5427" />
+      <inertia
+        ixx="0.00025679"
+        ixy="-1.0889E-07"
+        ixz="-1.7721E-07"
+        iyy="0.00035299"
+        iyz="-1.0966E-07"
+        izz="0.00030825" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link5.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="$(arg namespace)_joint5" type="revolute">
+    <origin xyz="0.43497 0 0.0605" rpy="0 0 0" />
+    <parent link="$(arg namespace)_link4" />
+    <child link="$(arg namespace)_link5" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+
+  <!-- ################# Link 6 ################# -->
+
+  <link name="$(arg namespace)_link6">
+    <inertial>
+      <origin xyz="0.092851 0.0014684 -0.00049948" rpy="0 0 0" />
+      <mass value="0.92359" />
+      <inertia
+        ixx="0.002354"
+        ixy="-5.6296E-09"
+        ixz="2.1759E-09"
+        iyy="0.0026004"
+        iyz="1.928E-07"
+        izz="0.0010821" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link6.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_control/description/meshes/yurs/link6.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="$(arg namespace)_joint6" type="revolute">
+    <origin xyz="0.082 0 -0.0605" rpy="0 0 0" />
+    <parent link="$(arg namespace)_link5" />
+    <child link="$(arg namespace)_link6" />
+    <axis xyz="-1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+</robot>
