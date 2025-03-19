@@ -38,6 +38,7 @@ ament_python_install_package(${PROJECT_NAME})
 
 install(PROGRAMS
   scripts/PID.py
+  scripts/kinematics.py
   scripts/arm_states_encoder.py
   scripts/arm_states_decoder.py
   scripts/base_station_encoder.py
