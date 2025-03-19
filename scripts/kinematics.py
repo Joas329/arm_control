@@ -1,10 +1,19 @@
-from urdf_parser_py.urdf import URDF
 import numpy as np
+import rclpy
 
-class InverseKinematics:
+from std_msgs.msg import Float64MultiArray
+from urdf_parser_py.urdf import URDF
+from rclpy.node import Node
+
+urdf_file_path = './description/arm_hardware.urdf'
+
+class InverseKinematics(Node):
     def __init__(self, urdf_file_path):
         with open(urdf_file_path, 'r') as file:
             urdf_xml_string = file.read()
+
+
+        # ************ Class Member Variables ************ #
 
         # This line is hardcoded for our capstone arm
         urdf_xml_string = urdf_xml_string.replace('<?xml version="1.0" ?>', '')
@@ -31,6 +40,52 @@ class InverseKinematics:
         self.joint_translations = np.array(self.joint_translations)
         self.joint_rpy = np.array(self.joint_rpy)
         self.num_joints = len(self.joint_names)
+
+        # ************ Subscribers ************ #
+        self.desired_end_effector_position_subscriber = self.create_subscription(
+            Float64MultiArray,
+            'decoded/desired_end_effector_pose',
+            self.desired_position_callback,
+            10
+        )
+
+        # ************ Publishers ************ #
+        self.ik_new_joint_position_publisher = self.create_publisher(
+            Float64MultiArray,
+            'desired_joint_states',
+            10
+        )
+
+    # ********** Subcriber Callbacks *********** #
+
+    def desired_position_callback(self, desired_end_effector_pose):
+        # Parse through the new desired end effector pose and use kinematics
+
+        # (HARDCODE EXAMPLE FOR THE TIME BEING)
+        target = [0.4, 0.3, 0.5]  # x, y, z in meters
+
+        # Offset from last joint to end effector (if any)
+        end_effector_offset = [0, 0, 0.1]  # Example: 10cm along z-axis
+
+        # Solve IK
+        joint_angles = self.solve_ik(target, end_effector_offset)
+
+        if joint_angles is not None:
+            print("\nFinal Joint Angles (degrees):")
+            for i, name in enumerate(self.joint_names):
+                print(f"{name}: {np.degrees(joint_angles[i]):.2f}")
+
+            # Verify solution
+            final_pos = self.forward_kinematics(joint_angles, end_effector_offset)
+            print(f"\nTarget position: {target}")
+            print(f"Achieved position: {final_pos}")
+            print(f"Error: {np.linalg.norm(np.array(target) - final_pos):.4f} meters")
+
+            self.ik_new_joint_position_publisher.publish(joint_angles)
+
+            return
+
+        return
 
     def axis_angle_rotation_matrix(self, axis, angle):
         """
@@ -287,30 +342,14 @@ class InverseKinematics:
             # Could implement more advanced retry strategies here
             return None
 
-# Example usage
-if __name__ == "__main__":
-    # Path to your URDF file
-    urdf_file_path = './description/arm_hardware.urdf'
+def main(args=None):
+    rclpy.init()
+    node = InverseKinematics()
+    color_start = "\033[34m"
+    color_reset = "\033[0m"
+    node.get_logger().info(f"{color_start}Initializing Kinematics and waiting on desired positions{color_reset}")
+    rclpy.spin(node)
+    rclpy.shutdown()
 
-    # Create IK solver
-    ik_solver = InverseKinematics(urdf_file_path)
-
-    # Define target position for end effector
-    target = [0.4, 0.3, 0.5]  # x, y, z in meters
-
-    # Offset from last joint to end effector (if any)
-    end_effector_offset = [0, 0, 0.1]  # Example: 10cm along z-axis
-
-    # Solve IK
-    joint_angles = ik_solver.solve_ik(target, end_effector_offset)
-
-    if joint_angles is not None:
-        print("\nFinal Joint Angles (degrees):")
-        for i, name in enumerate(ik_solver.joint_names):
-            print(f"{name}: {np.degrees(joint_angles[i]):.2f}")
-
-        # Verify solution
-        final_pos = ik_solver.forward_kinematics(joint_angles, end_effector_offset)
-        print(f"\nTarget position: {target}")
-        print(f"Achieved position: {final_pos}")
-        print(f"Error: {np.linalg.norm(np.array(target) - final_pos):.4f} meters")
+if __name__ == '__main__':
+    main()
