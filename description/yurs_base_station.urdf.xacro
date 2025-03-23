@@ -75,7 +75,7 @@
     <parent link="$(arg namespace)_base_link" />
     <child link="$(arg namespace)_link1" />
     <axis xyz="0 -1 0" />
-    <limit lower="-1.57" upper="1.57" effort="1000" velocity="1.0" />
+    <limit lower="-0.785398" upper="0.785398" effort="1000" velocity="1.0" />
   </joint>
 
   <!-- ################# Link 2 ################# -->
@@ -114,7 +114,7 @@
     <parent link="$(arg namespace)_link1" />
     <child link="$(arg namespace)_link2" />
     <axis xyz="0 0 1" />
-    <limit lower="-1.57" upper="1.57" effort="1000" velocity="1.0" />
+    <limit lower="-1.5708" upper="0.7854" effort="1000" velocity="1.0" />
   </joint>
 
   <!-- ################# Link 3 ################# -->
@@ -153,7 +153,7 @@
     <parent link="$(arg namespace)_link2" />
     <child link="$(arg namespace)_link3" />
     <axis xyz="0 0 1" />
-    <limit lower="-1.57" upper="1.57" effort="1000" velocity="1.0" />
+    <limit lower="0.174533" upper="4.53786" effort="1000" velocity="1.0" />
   </joint>
 
   <!-- ################# Link 4 ################# -->
@@ -192,7 +192,7 @@
     <parent link="$(arg namespace)_link3" />
     <child link="$(arg namespace)_link4" />
     <axis xyz="1 0 0" />
-    <limit lower="-1.57" upper="1.57" effort="1000" velocity="1.0" />
+    <limit lower="-3.1416" upper="3.1416" effort="1000" velocity="1.0" />
   </joint>
 
   <!-- ################# Link 5 ################# -->
@@ -231,7 +231,7 @@
     <parent link="$(arg namespace)_link4" />
     <child link="$(arg namespace)_link5" />
     <axis xyz="0 0 1" />
-    <limit lower="-1.57" upper="1.57" effort="1000" velocity="1.0" />
+    <limit lower="-1.5708" upper="1.5708" effort="1000" velocity="1.0" />
   </joint>
 
   <!-- ################# Link 6 ################# -->
@@ -270,6 +270,6 @@
     <parent link="$(arg namespace)_link5" />
     <child link="$(arg namespace)_link6" />
     <axis xyz="-1 0 0" />
-    <limit lower="-1.57" upper="1.57" effort="1000" velocity="1.0" />
+    <limit lower="-1.5708" upper="1.5708" effort="1000" velocity="1.0" />
   </joint>
 </robot>
