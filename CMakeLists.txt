@@ -12,12 +12,15 @@ find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 
 # ********************* Cpp Stuff ****************
-
 include_directories(include)
 include_directories(description)
 include_directories(arm_control)
 include_directories(launch)
 include_directories(config)
+include_directories(env-hooks)
+include_directories(worlds)
+
+ament_environment_hooks("description/hooks/resource_paths.dsv.in")
 
 # Create cpp executables
 # add_executable(cpp_exe src/cpp_node.cpp)
@@ -30,8 +33,16 @@ include_directories(config)
 #   DESTINATION lib/${PROJECT_NAME}
 # )
 
-# **************** Python Stuff *****************
+install(DIRECTORY description/
+  DESTINATION share/${PROJECT_NAME}/description
+)
 
+install(DIRECTORY env-hooks/
+  DESTINATION share/${PROJECT_NAME}/env-hooks
+)
+
+
+# **************** Python Stuff *****************
 ament_python_install_package(${PROJECT_NAME})
 
 # Install Python executables
@@ -56,6 +67,8 @@ install(DIRECTORY
   config
   description
   launch
+  worlds
+  env-hooks
   DESTINATION share/${PROJECT_NAME}/
 )
 

@@ -1,0 +1,6 @@
+export GZ_SIM_RESOURCE_PATH="${CMAKE_INSTALL_PREFIX}/share/arm_control/description:${GZ_SIM_RESOURCE_PATH}"
+export GAZEBO_MODEL_PATH="/path/to/arm_control/description:${GAZEBO_MODEL_PATH}"  # If using traditional Gazebo
+# or
+export GZ_SIM_RESOURCE_PATH="/path/to/arm_control/description:${GZ_SIM_RESOURCE_PATH}"  # If using Ignition Gazebo
+
+
