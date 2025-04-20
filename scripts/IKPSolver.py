@@ -1,5 +1,6 @@
 import numpy as np
-from sympy import symbols, sin, cos, Matrix, atan2, sqrt, acos
+from sympy import symbols, sin, cos, Matrix, atan2, sqrt, acos, lambdify
+from numpy.linalg import norm
 
 class IKSPSolver():
     def __init__(self):
@@ -107,4 +108,24 @@ class IKSPSolver():
             'theta6': theta6_expr,
             'wrist_center': Pw
         }
-    
+
+    def solve_for_joint_x(self, desired_3d_pose, joint_name):
+        ik_eqs = self.get_ik_equations()
+
+        if joint_name not in ik_eqs:
+            raise ValueError(f"Invalid joint name '{joint_name}'. Use one of: {list(ik_eqs.keys())}")
+
+        R06 = desired_3d_pose[:3, :3]
+        P06 = desired_3d_pose[:3, 3]
+        d6 = -0.0605
+        z = np.array([0, 0, 1])
+        wrist_center = P06 - d6 * R06 @ z
+        x_val, y_val, z_val = wrist_center
+
+        x, y, z = symbols("x y z")
+
+        joint_expr = ik_eqs[joint_name]
+        joint_func = lambdify((x, y, z), joint_expr, modules="numpy")
+
+        result = joint_func(x_val, y_val, z_val)
+        return float(result)
