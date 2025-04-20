@@ -1,7 +1,14 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_arm" >	
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_arm">
+	<xacro:arg name="arm_model" default="mk3"/>
+	<xacro:arg name="serial_port" default="/dev/ttyACM1"/>
+	<xacro:arg name="arduino_serial_port" default="/dev/ttyUSB0"/>
+	<xacro:arg name="calibrate" default="False"/>
+	<xacro:arg name="tf_prefix" default="" />
+	<xacro:arg name="include_gripper" default="false"/>
 
 	<xacro:include filename="hardware_macros.xacro"/>
+	<xacro:include filename="$(find arm_control)/description/arm.ros2_control.xacro"/>
 
 	<material name="white">
         <color rgba="1 1 1 1"/>
@@ -215,67 +222,15 @@
 		</collision>
   	</link>
 
-	<!-- <joint name="arm_j7" type="prismatic">
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <parent link="arm_a7"/>
-            <child link="arm_a8"/>
-            <axis xyz="1 0 0"/>
-			 <limit effort="50" lower="-50" upper="50" velocity="50"/>
-	</joint> -->
-
-	<!-- <link name="arm_a8">
-		<inertial>
-			<mass value="0.454"/>
-			<origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
-			<inertia ixx="7.0307" ixy="0.0" ixz="-0.0" iyy="7.0307" iyz="-0.0" izz="7.0307"/>
-		</inertial>
-		<collision>
-		<origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
-		<geometry>
-			<box size="0.01 0.01 0.01"/>
-		</geometry>
-		</collision>
-  	</link>
- -->
-
-
-
-	<!--Defining ROS2 Control Joints-->
-
-	<ros2_control name="yurs_motor" type="actuator">
-		<hardware>
-			<plugin>yurs_hardware/yurs_motor</plugin>
-			<param name="can_interface">can0</param>
-		</hardware>
-
- 		<joint name="arm_j1">
-			<param name="device_id">6</param>
-			<param name="counts_per_rev">1050</param>
-		</joint>
-		<joint name="arm_j2">
-			<param name="device_id">7</param>
-			<param name="counts_per_rev">5250</param>
-		</joint>
-		<joint name="arm_j3">
-			<param name="device_id">8</param>
-			<param name="counts_per_rev">5250</param>
-		</joint>
-		<joint name="arm_j4">
-			<param name="device_id">11</param>
-			<param name="counts_per_rev">1149.1597</param>
-		</joint>
-		<!-- <joint name="arm_j5">
-			<param name="device_id">10</param>
-			<param name="counts_per_rev">1149.1597</param>
-		</joint>
-		<joint name="arm_j6">
-			<param name="device_id">11</param>
-			<param name="counts_per_rev">1149.1597</param>
-		</joint> -->
-		<!-- <joint name="arm_j7">
-			<param name="device_id">12</param>
-			<param name="counts_per_rev">1512</param>
-		</joint> -->
-	</ros2_control>
-
+	<!-- ROS2 Control -->
+	<xacro:arm_ros2_control
+		arm_model="$(arg arm_model)"
+		plugin_name="annin_ar4_driver/ARHardwareInterface"
+		serial_port="$(arg serial_port)"
+		calibrate="$(arg calibrate)"
+		robot_parameters_file="$(find arm_control)/config/arm_params.yaml"
+		joint_offset_parameters_file="$(find arm_control)/config/joint_offsets.yaml"
+		driver_parameters_file="$(find arm_control)/config/driver.yaml"
+		tf_prefix="$(arg tf_prefix)"
+	/>
 </robot>
