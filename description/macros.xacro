@@ -103,7 +103,7 @@
         <origin xyz="${x*intom} ${-z*intom} ${y*intom}" rpy="${roll} ${pitch} ${yaw}"/>
     </xacro:macro>
 
-    <xacro:macro name="arm_component" params="namespace component_number type parent_link child_link mass axis Lxx Lxy Lxz Lyy Lyz Lzz file inertiaX inertiaY inertiaZ effort_limit lower_limit upper_limit velocity_limit joint_X joint_Y joint_Z">
+    <xacro:macro name="arm_component" params="component_number type parent_link child_link mass axis Lxx Lxy Lxz Lyy Lyz Lzz file inertiaX inertiaY inertiaZ effort_limit lower_limit upper_limit velocity_limit joint_X joint_Y joint_Z namespace:='robot1'">
         <link name="${namespace}_arm_a${component_number}">
             <visual>
                 <origin rpy="${radians(90)} 0 0" xyz="0 0 0"/>
