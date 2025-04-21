@@ -17,6 +17,13 @@ class IKSPSolver():
             real=True
         )
 
+        x, y, z = symbols('x y z', real=True)
+        r11, r12, r13, r21, r22, r23, r31, r32, r33 = symbols(
+            'r11 r12 r13 r21 r22 r23 r31 r32 r33', real=True
+        )
+        self.position_syms = (x, y, z)
+        self.R_syms = (r11, r12, r13, r21, r22, r23, r31, r32, r33)
+
         self.dh_params = np.array([
             (0.0,     1.5707,    0.0,       theta1),    # Joint 1
             (0.0,     0.0,       -0.063263, theta2),    # Joint 2
@@ -56,57 +63,68 @@ class IKSPSolver():
             print(f"Invalid joint name: '{joint_name}'. Valid options: {list(equations.keys())}")
 
     def get_ik_equations(self):
-        # Step 1: Get symbolic wrist center
-        T06 = self.Transformations_list[6]
-        R06 = T06[:3, :3]
-        P06 = T06[:3, 3]
-        z = Matrix([0, 0, 1])
-        d6 = -0.0605
-        Pw = P06 - d6 * R06 @ z
+        # Position symbols
+        x, y, z = symbols('x y z', real=True)
+        # Rotation matrix symbols for R^0_6
+        r11, r12, r13, r21, r22, r23, r31, r32, r33 = symbols(
+            'r11 r12 r13 r21 r22 r23 r31 r32 r33', real=True
+        )
 
-        x, y, z_wc = Pw[0], Pw[1], Pw[2]
+        # Extract DH link parameters for IK (following the Pieper method indexing)
+        d2 = self.dh_params[1][2]   # d for joint 2
+        a2 = self.dh_params[2][0]   # a for joint 3
+        a3 = self.dh_params[3][0]   # a for joint 4
+        d6 = self.dh_params[5][2]   # d for joint 6
 
-        # θ1
-        theta1_expr = atan2(y, x)
+        # Compute wrist-center coordinates
+        px = x - d6 * r13
+        py = y - d6 * r23
+        pz = z - d6 * r33
 
-        # Planar projection from joint 2's perspective
-        d2 = -0.063263
-        a2 = 0.4566
-        a3 = 0.11713
-        r = sqrt(x**2 + y**2)
-        z2 = z_wc - d2
-        R_len = sqrt(r**2 + z2**2)
+        # Solve for theta1
+        theta1 = atan2(py, px)
 
-        # θ3 via cosine law
-        cos_theta3 = (R_len**2 - a2**2 - a3**2) / (2 * a2 * a3)
-        theta3_expr = acos(cos_theta3)
+        # Planar distance to wrist center in joint-2/3 plane
+        r = sqrt(px**2 + py**2)
+        s = pz - d2
+        Rlen = sqrt(r**2 + s**2)
 
-        # θ2 from triangle
-        alpha = atan2(z2, r)
-        beta = atan2(a3 * sin(theta3_expr), a2 + a3 * cos(theta3_expr))
-        theta2_expr = alpha - beta
+        # Solve for theta3 via law of cosines
+        cos_theta3 = (Rlen**2 - a2**2 - a3**2) / (2 * a2 * a3)
+        theta3 = acos(cos_theta3)
 
-        # T03
-        T01 = self.dh_transform(0.0, 1.5707, 0.0, theta1_expr)
-        T12 = self.dh_transform(0.0, 0.0, d2, theta2_expr)
-        T23 = self.dh_transform(a2, 0.0, 0.0, theta3_expr)
-        T03 = T01 * T12 * T23
-        R03 = T03[:3, :3]
+        # Solve for theta2
+        alpha = atan2(s, r)
+        beta = atan2(a3 * sin(theta3), a2 + a3 * cos(theta3))
+        theta2 = alpha - beta
+
+        # Reconstruct R^0_3 to isolate wrist orientation
+        T01 = self.dh_transform(*self.dh_params[0][:3], theta1)
+        T12 = self.dh_transform(*self.dh_params[1][:3], theta2)
+        T23 = self.dh_transform(*self.dh_params[2][:3], theta3)
+        R03 = (T01 * T12 * T23)[:3, :3]
+
+        # Compose R^0_6 from symbols
+        R06 = Matrix([[r11, r12, r13],
+                      [r21, r22, r23],
+                      [r31, r32, r33]])
+        # Wrist orientation
         R36 = R03.T * R06
 
-        # θ5 from R36
-        theta5_expr = acos(R36[2, 2])
-        theta4_expr = atan2(R36[1, 2], R36[0, 2])
-        theta6_expr = atan2(R36[2, 1], -R36[2, 0])
+        # Solve for theta4, theta5, theta6
+        theta5 = acos(R36[2, 2])
+        theta4 = atan2(R36[1, 2], R36[0, 2])
+        theta6 = atan2(R36[2, 1], -R36[2, 0])
 
         return {
-            'theta1': theta1_expr,
-            'theta2': theta2_expr,
-            'theta3': theta3_expr,
-            'theta4': theta4_expr,
-            'theta5': theta5_expr,
-            'theta6': theta6_expr,
-            'wrist_center': Pw
+            'theta1': theta1,
+            'theta2': theta2,
+            'theta3': theta3,
+            'theta4': theta4,
+            'theta5': theta5,
+            'theta6': theta6,
+            'wrist_center': Matrix([px, py, pz]),
+            'R_symbols': (r11, r12, r13, r21, r22, r23, r31, r32, r33)
         }
 
     def solve_for_joint_x(self, desired_3d_pose, joint_name):
