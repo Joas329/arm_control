@@ -128,22 +128,51 @@ class IKSPSolver():
         }
 
     def solve_for_joint_x(self, desired_3d_pose, joint_name):
-        ik_eqs = self.get_ik_equations()
+        if joint_name not in self.ik_equations:
+            raise ValueError(f"Unknown joint '{joint_name}'")
 
-        if joint_name not in ik_eqs:
-            raise ValueError(f"Invalid joint name '{joint_name}'. Use one of: {list(ik_eqs.keys())}")
+        # Extract end-effector pose
+        px = desired_3d_pose[0, 3]
+        py = desired_3d_pose[1, 3]
+        pz = desired_3d_pose[2, 3]
+        R06_vals = desired_3d_pose[:3, :3].flatten()
 
-        R06 = desired_3d_pose[:3, :3]
-        P06 = desired_3d_pose[:3, 3]
-        d6 = -0.0605
-        z = np.array([0, 0, 1])
-        wrist_center = P06 - d6 * R06 @ z
-        x_val, y_val, z_val = wrist_center
+        # Evaluate expression
+        expr = self.ik_equations[joint_name]
+        f = lambdify(tuple(self.position_syms) + tuple(self.R_syms), expr, 'numpy')
+        val = float(f(px, py, pz, *R06_vals))
 
-        x, y, z = symbols("x y z")
+        # Compute the two possible solutions per equation
+        if joint_name == 'theta1':
+            # atan2(y,x) and atan2(y,x)+pi
+            return val, val + np.pi
 
-        joint_expr = ik_eqs[joint_name]
-        joint_func = lambdify((x, y, z), joint_expr, modules="numpy")
+        elif joint_name == 'theta2':
+            # theta2 = alpha - beta  =>  theta2_alt = alpha + beta
+            d2 = float(self.dh_params[1][2])
+            a2 = float(self.dh_params[2][0])
+            a3 = float(self.dh_params[3][0])
+            r_planar = np.hypot(px, py)
+            s = pz - d2
+            alpha = np.arctan2(s, r_planar)
+            # principal val = alpha - beta, so beta = alpha - val
+            beta = alpha - val
+            return val, alpha + beta
 
-        result = joint_func(x_val, y_val, z_val)
-        return float(result)
+        elif joint_name == 'theta3':
+            # acos -> two solutions: +acos, -acos
+            return val, -val
+
+        elif joint_name == 'theta5':
+            # acos -> two solutions: +acos, -acos
+            return val, -val
+
+        elif joint_name == 'theta4':
+            # atan2 -> two solutions: val and val + pi
+            return val, val + np.pi
+
+        elif joint_name == 'theta6':
+            # atan2 -> two solutions: val and val + pi
+            return val, val + np.pi
+
+        return val, None
