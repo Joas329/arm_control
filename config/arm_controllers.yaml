@@ -1,15 +1,61 @@
-controller_manager:
+/**/controller_manager:
   ros__parameters:
-    joint_group_position_controller:
-      type: position_controllers/JointGroupPositionController
-      joints:
-        - robot1_arm_j1
-        - robot1_arm_j2
-        - robot1_arm_j3
-        - robot1_arm_j4
-        - robot1_arm_j5
-        - robot1_arm_j6
-      interface_name: position
+    update_rate: 100 # Hz
+
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    gripper_controller:
+      type: position_controllers/GripperActionController
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
+
+/**/joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - arm_j1
+      - arm_j2
+      - arm_j3
+      - arm_j4
+      - arm_j5
+      - arm_j6
+    command_interfaces:
+      - position
+      - velocity
+    state_interfaces:
+      - position
+      - velocity
+
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: true
+    allow_nonzero_velocity_at_trajectory_end: true
+    constraints:
+      stopped_velocity_tolerance: 0.5
+      goal_time: 5.0
+      arm_j1: { trajectory: 999.0, goal: 999.0 }
+      arm_j2: { trajectory: 999.0, goal: 999.0 }
+      arm_j3: { trajectory: 999.0, goal: 999.0 }
+      arm_j4: { trajectory: 999.0, goal: 999.0 }
+      arm_j5: { trajectory: 999.0, goal: 999.0 }
+      arm_j6: { trajectory: 999.0, goal: 999.0 }
+
+    gains: # Required because we're controlling a velocity interface
+      arm_j1: { p: 10.0, d: 1.0, i: 1.0, i_clamp: 1.0 } # Smaller 'p' term, since ff term does most of the work
+      arm_j2: { p: 10.0, d: 1.0, i: 1.0, i_clamp: 1.0 }
+      arm_j3: { p: 10.0, d: 1.0, i: 1.0, i_clamp: 1.0 }
+      arm_j4: { p: 10.0, d: 1.0, i: 1.0, i_clamp: 1.0 }
+      arm_j5: { p: 10.0, d: 1.0, i: 1.0, i_clamp: 1.0 }
+      arm_j6: { p: 10.0, d: 1.0, i: 1.0, i_clamp: 1.0 }
+
+    velocity_ff:
+      arm_j1: 1.0
+      arm_j2: 1.0
+      arm_j3: 1.0
+      arm_j4: 1.0
+      arm_j5: 1.0
+      arm_j6: 1.0
+
+/**/gripper_controller:
+  ros__parameters:
+    joint: $(var tf_prefix)gripper_jaw1_joint
